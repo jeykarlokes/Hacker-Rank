@@ -1,0 +1,59 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+#break the given list into 3 pieces of sub list or just the middle element
+def find_hour(hour_row, size):
+    temp = []
+    for i in range(len(hour_row)-2):
+        col_1, col_2, col_3 = hour_row[i], hour_row[i+1], hour_row[i+2]
+        temp.append([col_1, col_2, col_3])
+
+    if size == 3:
+        return temp
+    elif size == 1:
+        for index, t in enumerate(temp):
+            temp[index] = t[1]
+        return temp
+
+
+# Complete the hourglassSum function below.
+def hourglassSum(arr):
+    hour_glasses = []
+
+    for i in range(len(arr)-2):
+        row_1, row_2, row_3 = arr[i], arr[i+1], arr[i+2]
+
+        row_1_hours = find_hour(row_1, 3)
+        row_2_hours = find_hour(row_2, 1)
+        row_3_hours = find_hour(row_3, 3)
+
+        for index, hours in enumerate(row_1_hours):
+            hour_glass = [hour for hour in hours]               #1 1 1
+            hour_glass.append(row_2_hours[index])               #  0
+            hour_glass += [hour for hour in row_3_hours[index]] #1 1 1
+            #hour_glass = [1, 1, 1, 0, 1, 1, 1]
+            hour_glasses.append(hour_glass)
+
+    hour_glasses_sum = [sum(hour_glass) for hour_glass in hour_glasses]
+
+    return max(hour_glasses_sum)
+
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    arr = []
+
+    for _ in range(6):
+        arr.append(list(map(int, input().rstrip().split())))
+
+    result = hourglassSum(arr)
+
+    fptr.write(str(result) + '\n')
+
+    fptr.close()
