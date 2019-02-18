@@ -1,0 +1,44 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+    
+nm = input().split()
+
+n = int(nm[0])
+
+m = int(nm[1])
+
+queries = []
+
+
+# Complete the arrayManipulation function below.
+zero_arr = [0 for i in range(n)]
+def calculate(a,b,k):
+    if a >= 1 and a <= n:
+        if b >= 1 and b <= n:
+            if k >=0 and k <= 10**9:   
+                for val in range(a-1,b):
+                    index_val = zero_arr[val]
+                    sum_val = index_val + k 
+                    zero_arr[val] = sum_val
+                return zero_arr
+    
+    pass
+def arrayManipulation(n, queries):
+    if n >= 3 and n <= 10**7:
+        if m >=1 and m <= 2*(10**5):
+            for i in queries:
+                calculate(*i)
+        print(max(zero_arr))
+
+            
+for _ in range(m):
+    queries.append(list(map(int, input().rstrip().split())))
+
+
+result = arrayManipulation(n, queries)
